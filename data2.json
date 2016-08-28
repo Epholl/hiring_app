@@ -4,6 +4,10 @@
       "Name": "RD",
       "employees": [
         {
+          "firstName": "Jason",
+          "lastName": "Gold",
+          "avatar": "http://icons.iconarchive.com/icons/bevel-and-emboss/character/64/chef-icon.png"
+        },
         {
           "firstName": "John",
           "lastName": "Smith",
