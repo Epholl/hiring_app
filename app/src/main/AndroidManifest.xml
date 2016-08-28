@@ -22,11 +22,6 @@
             </intent-filter>
         </activity>
 
-        <provider
-            android:authorities="sk.epholl.hiringapp.provider"
-            android:name=".data.db.EmployeeProvider"
-            android:exported="false">
-        </provider>
     </application>
 
 </manifest>

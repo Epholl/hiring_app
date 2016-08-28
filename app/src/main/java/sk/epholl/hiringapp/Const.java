@@ -9,6 +9,6 @@ public final class Const {
         throw new UnsupportedOperationException("Class " + getClass().getName() + " is not instantiable.");
     }
 
-    public static final String DEFAULT_DATA_URL = "https://raw.githubusercontent.com/Epholl/hiring_app/master/data2.json";
+    public static final String DEFAULT_DATA_URL = "https://raw.githubusercontent.com/Epholl/hiring_app/master/data.json";
 
 }

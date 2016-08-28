@@ -9,6 +9,8 @@ import java.util.List;
 import sk.epholl.hiringapp.Const;
 import sk.epholl.hiringapp.data.ApiDataProvider;
 import sk.epholl.hiringapp.data.api.Company;
+import sk.epholl.hiringapp.data.bus.DataUpdatedEvent;
+import sk.epholl.hiringapp.data.bus.EventBus;
 import sk.epholl.hiringapp.data.db.Employee;
 import sk.epholl.hiringapp.data.db.EmployeesDao;
 
@@ -40,6 +42,12 @@ public class RefreshDbDataRequest {
                         dao.replaceEmployeeData(employeesAsList);
                         dao.close();
                         return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+                        super.onPostExecute(aVoid);
+                        EventBus.getInstance().post(new DataUpdatedEvent());
                     }
                 }.execute(response);
             }
