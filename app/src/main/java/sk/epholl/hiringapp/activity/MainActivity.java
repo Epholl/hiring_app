@@ -13,6 +13,7 @@ import java.util.List;
 
 import eu.inloop.viewmodel.base.ViewModelBaseActivity;
 import sk.epholl.hiringapp.Adapter.EmployeeAdapter;
+import sk.epholl.hiringapp.HiringApp;
 import sk.epholl.hiringapp.R;
 import sk.epholl.hiringapp.data.db.Employee;
 
@@ -42,6 +43,13 @@ public class MainActivity extends ViewModelBaseActivity<IMainActivityView, MainA
             @Override
             public void onClick(View v) {
                 getViewModel().setSelectedDepartment("RD");
+            }
+        });
+
+        findViewById(R.id.retry_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((HiringApp)getApplication()).checkForUpdate();
             }
         });
     }

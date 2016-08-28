@@ -19,7 +19,10 @@ public class HiringApp extends Application {
         ApiDataProvider.init(this);
         EventBus.init();
 
-        // Call api request to refresh DB data. Only happens on app startup
+        checkForUpdate();
+    }
+
+    public void checkForUpdate() {
         new RefreshDbDataRequest(this).refreshDbData();
     }
 }
