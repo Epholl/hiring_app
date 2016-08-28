@@ -12,9 +12,20 @@ public class HiringAppSQLiteHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "hiring_app.db";
     public static final int DATABASE_VERSION = 1;
 
+    private static HiringAppSQLiteHelper sInstance;
 
+    public static void init(Context context) {
+        sInstance = new HiringAppSQLiteHelper(context);
+    }
 
-    public HiringAppSQLiteHelper(Context context) {
+    public static HiringAppSQLiteHelper getInstance() {
+        if (sInstance == null) {
+            throw new IllegalStateException("Must initialize first");
+        }
+        return sInstance;
+    }
+
+    private HiringAppSQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

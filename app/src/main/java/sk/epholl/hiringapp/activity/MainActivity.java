@@ -1,21 +1,24 @@
 package sk.epholl.hiringapp.activity;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import java.util.List;
 
 import eu.inloop.viewmodel.base.ViewModelBaseActivity;
+import sk.epholl.hiringapp.Adapter.EmployeeAdapter;
 import sk.epholl.hiringapp.R;
 import sk.epholl.hiringapp.data.db.Employee;
-import sk.epholl.hiringapp.data.db.EmployeesDao;
 
 public class MainActivity extends ViewModelBaseActivity<IMainActivityView, MainActivityModel> implements IMainActivityView {
+
+    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,21 +27,14 @@ public class MainActivity extends ViewModelBaseActivity<IMainActivityView, MainA
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setModelView(this);
+    }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-                EmployeesDao dao = new EmployeesDao(getApplicationContext());
-                dao.open();
-                Log.e("Main Activity", "total:" + dao.getAllEmployees().size());
-                List<String> s = dao.getDepartments();
-                Log.e("Main Activity", "departments:" + s.size());
-
-                dao.close();
-            }
-        });
+        mRecyclerView = (RecyclerView) findViewById(R.id.employee_recycler_view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
 
     @Override
@@ -70,6 +66,23 @@ public class MainActivity extends ViewModelBaseActivity<IMainActivityView, MainA
 
     @Override
     public void setEmployeeData(List<Employee> employees) {
+        mRecyclerView.setAdapter(new EmployeeAdapter(employees));
+    }
 
+    @Override
+    public void setDepartmentData(List<String> departments) {
+        Log.e("DATA", "Here " + departments);
+
+    }
+
+    @Override
+    public void setSelectedDepartment(String selectedDepartment) {
+        Log.e("DATA", "Here " + selectedDepartment);
+
+    }
+
+    @Override
+    public Context getContext() {
+        return getApplicationContext();
     }
 }

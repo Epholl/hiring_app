@@ -44,7 +44,7 @@ public class EmployeesDao {
     private HiringAppSQLiteHelper mDbHelper;
 
     public EmployeesDao(Context context) {
-        mDbHelper = new HiringAppSQLiteHelper(context);
+        mDbHelper = HiringAppSQLiteHelper.getInstance();
     }
 
     public void open() throws SQLException {
