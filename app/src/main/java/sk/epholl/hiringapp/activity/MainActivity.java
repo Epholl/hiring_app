@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.List;
 
@@ -27,14 +27,28 @@ public class MainActivity extends ViewModelBaseActivity<IMainActivityView, MainA
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setModelView(this);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.employee_recycler_view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        findViewById(R.id.department_all_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getViewModel().setSelectedDepartment(null);
+            }
+        });
+
+        findViewById(R.id.department_rd_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getViewModel().setSelectedDepartment("RD");
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.employee_recycler_view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
 
     @Override
@@ -66,18 +80,27 @@ public class MainActivity extends ViewModelBaseActivity<IMainActivityView, MainA
 
     @Override
     public void setEmployeeData(List<Employee> employees) {
+        if (employees.size() == 0) {
+            findViewById(R.id.no_data_view).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.no_data_view).setVisibility(View.GONE);
+
+        }
+
+        if (mRecyclerView == null) {
+            // The activity was "losing" the Recycler View reference upon rotations, quick hacky fix
+            mRecyclerView = (RecyclerView) findViewById(R.id.employee_recycler_view);
+        }
         mRecyclerView.setAdapter(new EmployeeAdapter(employees));
     }
 
     @Override
     public void setDepartmentData(List<String> departments) {
-        Log.e("DATA", "Here " + departments);
 
     }
 
     @Override
     public void setSelectedDepartment(String selectedDepartment) {
-        Log.e("DATA", "Here " + selectedDepartment);
 
     }
 

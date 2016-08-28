@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Hiring App</string>
     <string name="action_settings">Settings</string>
-    <string name="department">Department</string>
+    <string name="department_all">All</string>
+    <string name="department_rd">RD</string>
+    <string name="no_data">No data found. Check your internet connection and restart app.</string>
 </resources>
